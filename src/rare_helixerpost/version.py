@@ -1,0 +1,1 @@
+__version__ = "0.1.0" # Don't forget to match with pyproject.toml, docs/source/conf.py, Cargo.toml

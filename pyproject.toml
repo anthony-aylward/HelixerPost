@@ -9,7 +9,7 @@ authors = [
 ]
 description = "Sliding window assessment to determine regions of the genome which are likely gene containing"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Rust",
     "Programming Language :: Python :: 3",
@@ -24,7 +24,7 @@ dependencies = [
 "Documentation" = "https://anthony-aylward.github.io/HelixerPost"
 
 [project.scripts]
-pankmer = "rare_helixerpost.rare_helixerpost:main"
+helixer_post_bin = "rare_helixerpost.rare_helixerpost:main"
 
 [tool.maturin]
-module-name = "rare_helixerpost.index"
+module-name = "rare_helixerpost.helixer_post_bin"
