@@ -122,4 +122,5 @@ fn helixer_post(
     }
 
     println!("Total: {}bp across {} windows", total_length, total_count);
+    Ok(())
 }
