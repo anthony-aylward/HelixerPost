@@ -18,7 +18,7 @@ else:
 
 HELIXER_POST_BIN_PATH = os.environ.get(
     'HELIXER_POST_BIN',
-    helixer_post_bin_config.get('helixer_post_bin_path', Path('helixer_post_bin'))
+    helixer_post_bin_config.get('helixer_post_bin_path')
 )
 
 # <genome.h5> <predictions.h5> <windowSize> <edgeThresh> <peakThresh> <minCodingLength> <gff>
