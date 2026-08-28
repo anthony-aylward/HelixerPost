@@ -21,7 +21,7 @@ pub mod results;
 mod helixer_post_bin {
     use pyo3::prelude::*;
 
-    #[pyfunction_export]
+    #[pymodule_export]
     use super::helixer_post;
 }
 
