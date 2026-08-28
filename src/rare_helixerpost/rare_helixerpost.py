@@ -1,11 +1,21 @@
+#===============================================================================
+# rare_helixerpost
+#===============================================================================
+
+# Imports ======================================================================
+
 import os
 import sys
 import tomllib
 from argparse import ArgumentParser
 from pathlib import Path
 from subprocess import run
+from warnings import warn
 from rare_helixerpost.version import __version__
 from rare_helixerpost.helixer_post_bin import helixer_post
+
+
+# Environment variables ========================================================
 
 HELIXER_POST_BIN_CONFIG_FILE = os.environ.get(
     'HELIXER_POST_BIN_CONFIG_FILE',
@@ -17,12 +27,19 @@ if Path(HELIXER_POST_BIN_CONFIG_FILE).is_file():
 else:
     helixer_post_bin_config = {}
 
+HELIXER_POST_BIN_USE_EXTERNAL = str(os.environ.get(
+    'HELIXER_POST_BIN_USE_EXTERNAL',
+    helixer_post_bin_config.get('helixer_post_bin_use_external')
+)).casefold() == 'true'
+
 HELIXER_POST_BIN_PATH = os.environ.get(
-    'HELIXER_POST_BIN',
+    'HELIXER_POST_BIN_PATH',
     helixer_post_bin_config.get('helixer_post_bin_path')
 )
 
-# <genome.h5> <predictions.h5> <windowSize> <edgeThresh> <peakThresh> <minCodingLength> <gff>
+# Functions ====================================================================
+
+# helixer_post_bin <genome.h5> <predictions.h5> <windowSize> <edgeThresh> <peakThresh> <minCodingLength> <gff>
 def parse_arguments():
     parser = ArgumentParser(description='sliding window assessment to determine regions of the genome which are likely gene containing')
     parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=__version__))
@@ -41,28 +58,32 @@ def parse_arguments():
 
 def main():
     args = parse_arguments()
-    helixer_post(
-        args.genome_h5,
-        args.predictions_h5,
-        args.window_size,
-        args.edge_threshold,
-        args.peak_threshold,
-        args.min_coding_length,
-        args.gff
-    )
-    # if (HELIXER_POST_BIN_PATH is not None or 'helixer_post_bin' in str(os.environ.get('PATH'))):
-    #     run(
-    #         (
-    #             HELIXER_POST_BIN_PATH or 'helixer_post_bin',
-    #             args.genome_h5,
-    #             args.predictions_h5,
-    #             str(args.window_size),
-    #             str(args.edge_threshold),
-    #             str(args.peak_threshold),
-    #             str(args.min_coding_length),
-    #             args.gff
-    #         ),
-    #         check=False
-    #     )
-    # else:
-    #     raise RuntimeError('Path to helixer_post_bin not defined')
+    if HELIXER_POST_BIN_USE_EXTERNAL and (
+        HELIXER_POST_BIN_PATH is not None
+        or 'helixer_post_bin' in str(os.environ.get('PATH'))
+    ):
+        run(
+            (
+                HELIXER_POST_BIN_PATH or 'helixer_post_bin',
+                args.genome_h5,
+                args.predictions_h5,
+                str(args.window_size),
+                str(args.edge_threshold),
+                str(args.peak_threshold),
+                str(args.min_coding_length),
+                args.gff
+            ),
+            check=False
+        )
+    else:
+        if HELIXER_POST_BIN_USE_EXTERNAL:
+            warn('external helixer_post_bin path not defined, defaulting to the version included in rare-helixerpost')
+        helixer_post(
+            args.genome_h5,
+            args.predictions_h5,
+            args.window_size,
+            args.edge_threshold,
+            args.peak_threshold,
+            args.min_coding_length,
+            args.gff
+        )
