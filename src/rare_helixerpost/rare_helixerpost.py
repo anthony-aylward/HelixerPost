@@ -1,4 +1,5 @@
 import os
+import sys
 import tomllib
 from argparse import ArgumentParser
 from pathlib import Path
@@ -32,6 +33,9 @@ def parse_arguments():
     parser.add_argument('peak_threshold')
     parser.add_argument('min_coding_length')
     parser.add_argument('gff')
+    if len(sys.argv)==1:
+        parser.print_help()
+        parser.exit()
     return parser.parse_args()
 
 
