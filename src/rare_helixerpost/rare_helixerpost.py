@@ -35,7 +35,7 @@ def parse_arguments():
     parser.add_argument('gff')
     if len(sys.argv)==1:
         parser.print_help()
-        parser.exit()
+        parser.exit(status=1)
     return parser.parse_args()
 
 
