@@ -28,11 +28,11 @@ def parse_arguments():
     parser.add_argument('--version', action='version', version='%(prog)s {version}'.format(version=__version__))
     parser.add_argument('genome_h5', metavar='<genome.h5>')
     parser.add_argument('predictions_h5', metavar='<predictions.h5>')
-    parser.add_argument('window_size')
-    parser.add_argument('edge_threshold')
-    parser.add_argument('peak_threshold')
-    parser.add_argument('min_coding_length')
-    parser.add_argument('gff')
+    parser.add_argument('window_size', metavar='<windowSize>', type=int)
+    parser.add_argument('edge_threshold', metavar='<edgeThresh>', type=float)
+    parser.add_argument('peak_threshold', metavar='<peakThresh>', type=float)
+    parser.add_argument('min_coding_length', metavar='<minCodingLength>', type=int)
+    parser.add_argument('gff', metavar='<gff>')
     if len(sys.argv)==1:
         parser.print_help()
         parser.exit(status=1)
@@ -47,10 +47,10 @@ def main():
                 HELIXER_POST_BIN_PATH or 'helixer_post_bin',
                 args.genome_h5,
                 args.predictions_h5,
-                args.window_size,
-                args.edge_threshold,
-                args.peak_threshold,
-                args.min_coding_length,
+                str(args.window_size),
+                str(args.edge_threshold),
+                str(args.peak_threshold),
+                str(args.min_coding_length),
                 args.gff
             ),
             check=False
