@@ -1,1 +1,2 @@
 from rare_helixerpost.version import __version__
+from rare_helixerpost.helixer_post_bin import helixer_post
