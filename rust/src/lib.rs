@@ -11,7 +11,6 @@ use crate::results::HelixerResults;
 use std::fs::File;
 use std::io::BufWriter;
 use std::path::Path;
-use std::process::exit;
 
 pub mod analysis;
 pub mod gff;
@@ -19,8 +18,6 @@ pub mod results;
 
 #[pymodule]
 mod helixer_post_bin {
-    use pyo3::prelude::*;
-
     #[pymodule_export]
     use super::helixer_post;
 }
