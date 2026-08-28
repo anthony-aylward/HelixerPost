@@ -1,5 +1,5 @@
 [package]
-name = "helixer_post_bin"
+name = "rare_helixerpost"
 version = "0.1.0"
 authors = ["Tony Bolger <bolger.tony@gmail.com>"]
 edition = "2018"
