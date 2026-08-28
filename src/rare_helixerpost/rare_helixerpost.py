@@ -37,16 +37,19 @@ def parse_arguments():
 
 def main():
     args = parse_arguments()
-    run(
-        (
-            HELIXER_POST_BIN_PATH,
-            args.genome_h5,
-            args.predictions_h5,
-            args.window_size,
-            args.edge_threshold,
-            args.peak_threshold,
-            args.min_coding_length,
-            args.gff
-        ),
-    check=False
-    )
+    if (HELIXER_POST_BIN_PATH is not None or 'helixer_post_bin' in str(os.environ.get('PATH'))):
+        run(
+            (
+                HELIXER_POST_BIN_PATH or 'helixer_post_bin',
+                args.genome_h5,
+                args.predictions_h5,
+                args.window_size,
+                args.edge_threshold,
+                args.peak_threshold,
+                args.min_coding_length,
+                args.gff
+            ),
+            check=False
+        )
+    else:
+        raise RuntimeError('Path to helixer_post_bin not defined')
