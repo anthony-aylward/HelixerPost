@@ -28,3 +28,5 @@ helixer_post_bin = "rare_helixerpost.rare_helixerpost:main"
 
 [tool.maturin]
 module-name = "rare_helixerpost.helixer_post_bin"
+include = ["LICENSE"]
+
